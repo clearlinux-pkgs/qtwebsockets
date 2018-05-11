@@ -4,7 +4,7 @@
 #
 Name     : qtwebsockets
 Version  : 5.10.1
-Release  : 4
+Release  : 5
 URL      : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtwebsockets-everywhere-src-5.10.1.tar.xz
 Source0  : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtwebsockets-everywhere-src-5.10.1.tar.xz
 Summary  : No detailed summary available
@@ -19,6 +19,7 @@ BuildRequires : pkgconfig(Qt5Qml)
 BuildRequires : pkgconfig(Qt5Quick)
 BuildRequires : pkgconfig(Qt5Test)
 BuildRequires : qtbase-dev
+BuildRequires : qtbase-extras
 
 %description
 This directory contains autotests and manual tests for the Qt WebSockets
