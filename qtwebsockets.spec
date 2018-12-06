@@ -4,7 +4,7 @@
 #
 Name     : qtwebsockets
 Version  : 5.12.0
-Release  : 12
+Release  : 13
 URL      : https://download.qt.io/official_releases/qt/5.12/5.12.0/submodules/qtwebsockets-everywhere-src-5.12.0.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/5.12/5.12.0/submodules/qtwebsockets-everywhere-src-5.12.0.tar.xz
 Summary  : No detailed summary available
