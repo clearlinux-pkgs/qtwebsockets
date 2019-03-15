@@ -4,6 +4,7 @@ libQt5WebSockets.so.5:Qt_5.1
 libQt5WebSockets.so.5:Qt_5.10
 libQt5WebSockets.so.5:Qt_5.11
 libQt5WebSockets.so.5:Qt_5.12
+libQt5WebSockets.so.5:Qt_5.12.2_PRIVATE_API
 libQt5WebSockets.so.5:Qt_5.2
 libQt5WebSockets.so.5:Qt_5.3
 libQt5WebSockets.so.5:Qt_5.4
@@ -12,7 +13,6 @@ libQt5WebSockets.so.5:Qt_5.6
 libQt5WebSockets.so.5:Qt_5.7
 libQt5WebSockets.so.5:Qt_5.8
 libQt5WebSockets.so.5:Qt_5.9
-libQt5WebSockets.so.5:Qt_5_PRIVATE_API
 libQt5WebSockets.so.5:_ZN10QWebSocket11qt_metacallEN11QMetaObject4CallEiPPv
 libQt5WebSockets.so.5:_ZN10QWebSocket11qt_metacastEPKc
 libQt5WebSockets.so.5:_ZN10QWebSocket12aboutToCloseEv
