@@ -1,5 +1,5 @@
-Qt 5.13.1 is a bug-fix release. It maintains both forward and backward
-compatibility (source and binary) with Qt 5.13.0.
+Qt 5.13.2 is a bug-fix release. It maintains both forward and backward
+compatibility (source and binary) with Qt 5.13.0 through 5.13.1.
 
 For more details, refer to the online documentation included in this
 distribution. The documentation is also available online:
