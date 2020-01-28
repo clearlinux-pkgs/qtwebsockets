@@ -1,6 +1,8 @@
-Qt 5.14 introduces many new features and improvements as well as bugfixes
-over the 5.13.x series. For more details, refer to the online documentation
-included in this distribution. The documentation is also available online:
+Qt 5.14.1 is a bug-fix release. It maintains both forward and backward
+compatibility (source and binary) with Qt 5.14.0.
+
+For more details, refer to the online documentation included in this
+distribution. The documentation is also available online:
 
 https://doc.qt.io/qt-5/index.html
 
@@ -15,21 +17,4 @@ https://bugreports.qt.io/
 Each of these identifiers can be entered in the bug tracker to obtain more
 information about a particular change.
 
-****************************************************************************
-*                                QWebSocket                                *
-****************************************************************************
-
- - [QTBUG-74464] QWebSocket no longer marks the connection as timed out
-   if it cannot read a whole message within 5 seconds. It will also no
-   longer block for up to 5 seconds when receiving a message.
-
-****************************************************************************
-*                             QWebSocketServer                             *
-****************************************************************************
-
- - [QTBUG-57026] [QTBUG-63312] Handshake timeout
-   * Added a timeout to the websocket handshake, 10 seconds by default.
-   * Call setHandshakeTimeout() to change the maximum duration.
-     Negative values mean it will not time out.
-   * handshakeTimeout() and handshakeTimeoutMS() can be used to query the
-     current timeout duration.
+ - This release contains only minor code improvements.
