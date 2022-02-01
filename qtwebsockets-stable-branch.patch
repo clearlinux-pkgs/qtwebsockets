@@ -1,0 +1,114 @@
+Allan Sandfeld Jensen (1):
+      Clear frame on reconnect
+
+Andre Hartmann (1):
+      Add doc note about internal ping/pong handling
+
+Antti Kokko (1):
+      Add changes file for Qt 5.15.2
+
+Jani Heikkinen (1):
+      Bump version
+
+Jens Trillmann (1):
+      Pass ignoreSslErrors to unterlying QSslSocket
+
+Marc Mutz (1):
+      QWebSocketProtocol: fix potential UB (signed overflow) in masking operation
+
+Timur Pocheptsov (1):
+      QWebSocket: websocket is a websocket, not a TLS socket necessary
+
+diff --git a/src/websockets/qwebsocket.cpp b/src/websockets/qwebsocket.cpp
+index 144268f..526c561 100644
+--- a/src/websockets/qwebsocket.cpp
++++ b/src/websockets/qwebsocket.cpp
+@@ -447,6 +447,9 @@ void QWebSocket::open(const QNetworkRequest &request)
+     The size of the \a payload cannot be bigger than 125.
+     If it is larger, the \a payload is clipped to 125 bytes.
+ 
++    \note QWebSocket and QWebSocketServer handles ping requests internally,
++    which means they automatically send back a pong response to the peer.
++
+     \sa pong()
+  */
+ void QWebSocket::ping(const QByteArray &payload)
+diff --git a/src/websockets/qwebsocket_p.cpp b/src/websockets/qwebsocket_p.cpp
+index 5a95215..824184a 100644
+--- a/src/websockets/qwebsocket_p.cpp
++++ b/src/websockets/qwebsocket_p.cpp
+@@ -74,7 +74,6 @@ const quint64 DEFAULT_OUTGOING_FRAME_SIZE_IN_BYTES = 512 * 512 * 2; //default si
+ 
+ QWebSocketConfiguration::QWebSocketConfiguration() :
+ #ifndef QT_NO_SSL
+-    m_sslConfiguration(QSslConfiguration::defaultConfiguration()),
+     m_ignoredSslErrors(),
+     m_ignoreSslErrors(false),
+ #endif
+@@ -271,6 +270,11 @@ QSslConfiguration QWebSocketPrivate::sslConfiguration() const
+ void QWebSocketPrivate::ignoreSslErrors(const QList<QSslError> &errors)
+ {
+     m_configuration.m_ignoredSslErrors = errors;
++    if (Q_LIKELY(m_pSocket)) {
++        QSslSocket *pSslSocket = qobject_cast<QSslSocket *>(m_pSocket);
++        if (Q_LIKELY(pSslSocket))
++            pSslSocket->ignoreSslErrors(errors);
++    }
+ }
+ 
+ /*!
+diff --git a/src/websockets/qwebsocket_p.h b/src/websockets/qwebsocket_p.h
+index ad667aa..c193a70 100644
+--- a/src/websockets/qwebsocket_p.h
++++ b/src/websockets/qwebsocket_p.h
+@@ -90,7 +90,24 @@ public:
+ 
+ public:
+ #ifndef QT_NO_SSL
+-    QSslConfiguration m_sslConfiguration;
++    struct TlsConfigurationLazy {
++        TlsConfigurationLazy &operator = (const QSslConfiguration &rhs)
++        {
++            tlsConfiguration.reset(new QSslConfiguration(rhs));
++            return *this;
++        }
++
++        operator QSslConfiguration() const
++        {
++            if (!tlsConfiguration.get())
++                tlsConfiguration.reset(new QSslConfiguration(QSslConfiguration::defaultConfiguration()));
++            return *tlsConfiguration.get();
++        }
++
++        mutable std::unique_ptr<QSslConfiguration> tlsConfiguration;
++    };
++
++    TlsConfigurationLazy m_sslConfiguration;
+     QList<QSslError> m_ignoredSslErrors;
+     bool m_ignoreSslErrors;
+ #endif
+diff --git a/src/websockets/qwebsocketdataprocessor.cpp b/src/websockets/qwebsocketdataprocessor.cpp
+index 0d2e927..4dab0b2 100644
+--- a/src/websockets/qwebsocketdataprocessor.cpp
++++ b/src/websockets/qwebsocketdataprocessor.cpp
+@@ -268,6 +268,7 @@ void QWebSocketDataProcessor::clear()
+     if (!m_pConverterState)
+         m_pConverterState = new QTextCodec::ConverterState(QTextCodec::ConvertInvalidToNull |
+                                                            QTextCodec::IgnoreHeader);
++    frame.clear();
+ }
+ 
+ /*!
+diff --git a/src/websockets/qwebsocketprotocol.cpp b/src/websockets/qwebsocketprotocol.cpp
+index df87a93..d0465f1 100644
+--- a/src/websockets/qwebsocketprotocol.cpp
++++ b/src/websockets/qwebsocketprotocol.cpp
+@@ -210,7 +210,7 @@ void QWebSocketProtocol::mask(char *payload, quint64 size, quint32 maskingKey)
+                             quint8((maskingKey & 0x0000FF00u) >> 8),
+                             quint8((maskingKey & 0x000000FFu))
+                           };
+-    int i = 0;
++    quint64 i = 0;
+     while (size-- > 0)
+         *payload++ ^= mask[i++ % 4];
+ }
