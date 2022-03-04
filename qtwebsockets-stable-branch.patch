@@ -1,4 +1,5 @@
-Allan Sandfeld Jensen (1):
+Allan Sandfeld Jensen (2):
+      Clear frame on reconnect
       Clear frame on reconnect
 
 Andre Hartmann (1):
@@ -15,6 +16,10 @@ Jens Trillmann (1):
 
 Marc Mutz (1):
       QWebSocketProtocol: fix potential UB (signed overflow) in masking operation
+
+Tarja Sundqvist (2):
+      Update commercial license headers
+      Revert "Update commercial license headers"
 
 Timur Pocheptsov (1):
       QWebSocket: websocket is a websocket, not a TLS socket necessary
@@ -88,10 +93,18 @@ index ad667aa..c193a70 100644
      bool m_ignoreSslErrors;
  #endif
 diff --git a/src/websockets/qwebsocketdataprocessor.cpp b/src/websockets/qwebsocketdataprocessor.cpp
-index 0d2e927..4dab0b2 100644
+index 0d2e927..69c4fa8 100644
 --- a/src/websockets/qwebsocketdataprocessor.cpp
 +++ b/src/websockets/qwebsocketdataprocessor.cpp
-@@ -268,6 +268,7 @@ void QWebSocketDataProcessor::clear()
+@@ -259,6 +259,7 @@ void QWebSocketDataProcessor::clear()
+     m_binaryMessage.clear();
+     m_textMessage.clear();
+     m_payloadLength = 0;
++    frame.clear();
+     if (m_pConverterState) {
+         if ((m_pConverterState->remainingChars != 0) || (m_pConverterState->invalidChars != 0)) {
+             delete m_pConverterState;
+@@ -268,6 +269,7 @@ void QWebSocketDataProcessor::clear()
      if (!m_pConverterState)
          m_pConverterState = new QTextCodec::ConverterState(QTextCodec::ConvertInvalidToNull |
                                                             QTextCodec::IgnoreHeader);
