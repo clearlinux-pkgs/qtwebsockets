@@ -8,7 +8,8 @@ Andre Hartmann (1):
 Antti Kokko (1):
       Add changes file for Qt 5.15.2
 
-Jani Heikkinen (1):
+Jani Heikkinen (2):
+      Bump version
       Bump version
 
 Jens Trillmann (1):
@@ -17,9 +18,10 @@ Jens Trillmann (1):
 Marc Mutz (1):
       QWebSocketProtocol: fix potential UB (signed overflow) in masking operation
 
-Tarja Sundqvist (2):
+Tarja Sundqvist (3):
       Update commercial license headers
       Revert "Update commercial license headers"
+      Merge remote-tracking branch 'origin/tqtc/lts-5.15.4' into tqtc/lts-5.15-opensource
 
 Timur Pocheptsov (1):
       QWebSocket: websocket is a websocket, not a TLS socket necessary
