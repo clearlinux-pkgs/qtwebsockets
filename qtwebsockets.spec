@@ -4,7 +4,7 @@
 #
 Name     : qtwebsockets
 Version  : 5.15.2
-Release  : 29
+Release  : 30
 URL      : https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtwebsockets-everywhere-src-5.15.2.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtwebsockets-everywhere-src-5.15.2.tar.xz
 Summary  : No detailed summary available
@@ -80,7 +80,7 @@ test -r config.log && cat config.log
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1652679346
+export SOURCE_DATE_EPOCH=1655666113
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qtwebsockets
 cp %{_builddir}/qtwebsockets-everywhere-src-5.15.2/LICENSE.GPL2 %{buildroot}/usr/share/package-licenses/qtwebsockets/4cc77b90af91e615a64ae04893fdffa7939db84c

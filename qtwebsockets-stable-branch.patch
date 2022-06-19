@@ -18,10 +18,12 @@ Jens Trillmann (1):
 Marc Mutz (1):
       QWebSocketProtocol: fix potential UB (signed overflow) in masking operation
 
-Tarja Sundqvist (3):
+Tarja Sundqvist (5):
       Update commercial license headers
       Revert "Update commercial license headers"
+      Bump version
       Merge remote-tracking branch 'origin/tqtc/lts-5.15.4' into tqtc/lts-5.15-opensource
+      Merge remote-tracking branch 'origin/tqtc/lts-5.15.5' into tqtc/lts-5.15-opensource
 
 Timur Pocheptsov (1):
       QWebSocket: websocket is a websocket, not a TLS socket necessary
